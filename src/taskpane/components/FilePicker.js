@@ -22,20 +22,22 @@ const ControlWrapper = styled.div`
   }
 `;
 
+const LabelStyle = styled.label`
+  white-space: nowrap;
+  margin: auto; /* Important */
+  vertical-align: middle;
+  text-align: center;
+`;
+
+const InputStyle = styled.input`
+  width: 100%;
+`;
+
 const FilePicker = props => {
   return (
-    <ControlWrapper className="ms-TextField">
-      <label htmlFor="image" className="ms-Label">
-        Choose a picture
-      </label>
-      <input
-        className="ms-TextField-field"
-        type="file"
-        id="image"
-        name="image"
-        accept="image/*"
-        onChange={props.handleChange}
-      />
+    <ControlWrapper>
+      <LabelStyle htmlFor="image">Choose a picture</LabelStyle>
+      <InputStyle type="file" id="image" name="image" accept="image/*" onChange={props.handleChange} />
     </ControlWrapper>
   );
 };
