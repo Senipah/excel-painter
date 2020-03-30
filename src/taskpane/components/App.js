@@ -1,5 +1,4 @@
 import React, { Fragment, useState, useEffect, createRef } from "react";
-import { Button, ButtonType } from "office-ui-fabric-react";
 import Header from "./Header";
 import FilePicker from "./FilePicker";
 import Progress from "./Progress";
@@ -32,12 +31,12 @@ const HiddenCanvas = styled.canvas`
   display: none;
 `;
 
-function sleep(ms) {
+const sleep = ms => {
   return new Promise(resolve => setTimeout(resolve, ms));
-}
+};
 
 const App = props => {
-  OfficeExtension.config.extendedErrorLogging = true;
+  // OfficeExtension.config.extendedErrorLogging = true;
   const { title, isOfficeInitialized } = props;
   const [image, setImage] = useState(null);
   const [imageData, setImageData] = useState(null);
@@ -150,12 +149,13 @@ const App = props => {
   };
 
   const paint = async () => {
-    const blockSize = Math.max(parseInt(5000 / imageData.width), 1); // ~1k cells at a time
+    // const blockSize = Math.max(parseInt(2000 / imageData.width), 1); // ~1k cells at a time
     // for (let i = 0; i < imageData.height; i += blockSize) {
+    const blockSize = Math.max(parseInt(2000 / imageData.width), 1); // ~2k cells at a time
     for (let i = 0; i < imageData.height; i += blockSize) {
       try {
         await paintBlock(i, blockSize);
-        await new Promise(resolve => setTimeout(resolve, 0));
+        await sleep(0);
       } catch (error) {
         console.log("Error painting block");
         console.error(error);
@@ -171,14 +171,7 @@ const App = props => {
       const fillCell = (row, col) => {
         const cell = sheet.getCell(row, col);
         const color = imageData.pixels[col + row * imageData.width];
-        // cell.format.fill.color = color;
-        // try {
-        //   cell.format.fill.color = color;
-        // } catch (error) {
-        //   console.log(color);
-        //   throw error;
-        // }
-        cell.format.fill.color = "yellow";
+        cell.format.fill.color = color;
         // call untrack() to release the range from memory
         cell.untrack();
       };
