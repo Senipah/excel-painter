@@ -47,6 +47,9 @@ const Wrapper = styled.div`
 
 const Title = styled.h2`
   word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  text-align: center;
 `;
 
 const Preview = props => {
